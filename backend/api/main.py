@@ -1,9 +1,12 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 
 from .schemas import CancerOutput, CLUSTER_INFO
 from .predict import predict_from_csv
+
+BASE_DIR = Path(__file__).parent
 
 description = """
 ## Cancer Subtype Discovery API
@@ -42,8 +45,8 @@ app.add_middleware(
 # ── Endpoint 1: Home ─────────────────────────────────────
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    with open("home.html", "r") as f:
-        return f.read()
+    with open(BASE_DIR / "home.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
 
 # ── Endpoint 2: Model Info ───────────────────────────────
 @app.get("/model-info")
