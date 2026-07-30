@@ -1,0 +1,9 @@
+backend/data/raw/data.csv
+backend/data/raw/labels.csv
+backend/data/processed/
+__pycache__/
+.vscode/
+*.pyc
+.ipynb_checkpoints/
+ai_env/
+*.egg-info/

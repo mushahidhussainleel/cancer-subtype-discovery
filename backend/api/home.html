@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancer Subtype Discovery API</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 700px; width: 100%; text-align: center; }
+        h1 {
+            font-size: 1.9em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .subtitle { color: #94a3b8; font-size: 1em; margin-bottom: 30px; }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30,41,59,0.8);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(56,189,248,0.2);
+            margin-bottom: 40px;
+            font-size: 0.9em;
+        }
+        .dot {
+            width: 8px; height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(30,41,59,0.6);
+            border: 1px solid rgba(56,189,248,0.15);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .card-title { font-size: 0.95em; font-weight: 600; color: #38bdf8; margin-bottom: 8px; }
+        .card-desc { font-size: 0.85em; color: #94a3b8; line-height: 1.6; }
+        .endpoint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15,23,42,0.6);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .method {
+            font-size: 0.75em;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 5px;
+            min-width: 55px;
+            text-align: center;
+        }
+        .get { background: #3b82f6; color: white; }
+        .post { background: #10b981; color: white; }
+        .path { font-family: monospace; font-size: 0.9em; color: #94a3b8; }
+        .path-desc { font-size: 0.82em; color: #475569; margin-left: auto; }
+        .disclaimer {
+            background: rgba(120,53,15,0.3);
+            border: 1px solid rgba(217,119,6,0.4);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .disclaimer-title { font-size: 0.9em; font-weight: 600; color: #fbbf24; margin-bottom: 6px; }
+        .disclaimer p { font-size: 0.82em; color: #d97706; line-height: 1.7; }
+        .buttons { display: flex; gap: 12px; justify-content: center; margin-top: 25px; }
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        .btn-primary { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); }
+        .btn-secondary { background: rgba(30,41,59,0.8); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+        .btn-secondary:hover { transform: translateY(-3px); }
+        .footer { margin-top: 30px; color: #475569; font-size: 0.85em; }
+        .sep { color: #475569; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>Cancer Subtype Discovery API</h1>
+    <p class="subtitle">Unsupervised ML - K-Means Clustering | TCGA Pan-Cancer RNA-Seq Dataset</p>
+
+    <div class="status">
+        <div class="dot"></div>
+        <span>API Live</span>
+        <span class="sep">|</span>
+        <span>v1.0.0</span>
+        <span class="sep">|</span>
+        <span>FastAPI</span>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <div class="card-title">ML Model</div>
+            <div class="card-desc">K-Means Clustering trained on 801 patients with 20,531 gene features</div>
+        </div>
+        <div class="card">
+            <div class="card-title">5 Cancer Subtypes</div>
+            <div class="card-desc">BRCA, KIRC, COAD, LUAD, PRAD. Silhouette Score: 0.167</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Dimensionality Reduction</div>
+            <div class="card-desc">StandardScaler + PCA. 262 components. 85% variance retained</div>
+        </div>
+        <div class="card">
+            <div class="card-title">CSV Upload</div>
+            <div class="card-desc">Upload gene expression CSV file to get cancer subtype prediction instantly</div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 25px; text-align: left;">
+        <div class="card-title" style="margin-bottom: 12px;">API Endpoints</div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/</span>
+            <span class="path-desc">Home page</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/model-info</span>
+            <span class="path-desc">Model details and cluster mapping</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/predict</span>
+            <span class="path-desc">Upload CSV and get cancer subtype</span>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <div class="disclaimer-title">Medical Disclaimer</div>
+        <p>This tool is intended for research and educational purposes only.
+        It is not a substitute for professional medical diagnosis or advice.
+        Always consult a qualified healthcare provider for medical decisions.
+        Predictions are based on unsupervised machine learning and may not
+        reflect clinical ground truth.</p>
+    </div>
+
+    <div class="buttons">
+        <a href="/docs" class="btn btn-primary">Swagger UI</a>
+        <a href="/redoc" class="btn btn-secondary">ReDoc</a>
+    </div>
+
+    <div class="footer">
+        <p>Built by <strong style="color:#38bdf8">Mushahid Hussain</strong></p>
+        <p style="margin-top:5px;">FastAPI + K-Means + TCGA Pan-Cancer RNA-Seq</p>
+    </div>
+
+</div>
+</body>
+</html>
