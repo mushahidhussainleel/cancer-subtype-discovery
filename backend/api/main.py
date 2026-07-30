@@ -2,8 +2,8 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from schemas import CancerOutput, CLUSTER_INFO
-from predict import predict_from_csv
+from .schemas import CancerOutput, CLUSTER_INFO
+from .predict import predict_from_csv
 
 description = """
 ## Cancer Subtype Discovery API
