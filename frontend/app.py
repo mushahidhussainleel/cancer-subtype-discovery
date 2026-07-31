@@ -6,12 +6,14 @@ from pathlib import Path
 # ── Page Config ──────────────────────────────────────────
 st.set_page_config(
     page_title="Cancer Subtype Discovery",
-    page_icon="🧬",
+    page_icon="DNA",
     layout="wide"
 )
 
-# ── Banner ───────────────────────────────────────────────
+# ── Base Directory ───────────────────────────────────────
 BASE_DIR = Path(__file__).parent
+
+# ── Banner ───────────────────────────────────────────────
 banner_path = BASE_DIR / "assets" / "banner.png"
 st.image(str(banner_path), use_container_width=True)
 
@@ -28,7 +30,7 @@ st.markdown("""
 
 st.markdown("---")
 
-# ── Layout: 2 columns ────────────────────────────────────
+# ── Layout ───────────────────────────────────────────────
 col1, col2 = st.columns([1, 1])
 
 with col1:
@@ -40,7 +42,8 @@ with col1:
 
     # Sample CSV download
     st.markdown("##### No data? Download sample file:")
-    with open("assets/sample_patient.csv", "rb") as f:
+    sample_path = BASE_DIR / "assets" / "sample_patient.csv"
+    with open(str(sample_path), "rb") as f:
         st.download_button(
             label="Download Sample CSV",
             data=f,
@@ -119,13 +122,13 @@ with col2:
                     st.error("Request timed out. The server may be starting up — please wait 30 seconds and try again.")
                 except requests.exceptions.ConnectionError:
                     st.error("Cannot connect to the server. Please check your internet connection.")
-                except Exception as e:
+                except Exception:
                     st.error("An unexpected error occurred. Please try again.")
 
     else:
         st.info("Upload a CSV file and click 'Predict Cancer Subtype' to get results.")
 
-# ── Model Info Section ───────────────────────────────────
+# ── Model Info ───────────────────────────────────────────
 st.markdown("---")
 st.markdown("### About the Model")
 
