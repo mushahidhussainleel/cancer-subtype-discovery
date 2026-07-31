@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+from pathlib import Path
 
 # ── Page Config ──────────────────────────────────────────
 st.set_page_config(
@@ -10,7 +11,9 @@ st.set_page_config(
 )
 
 # ── Banner ───────────────────────────────────────────────
-st.image("assets/banner.png", use_container_width=True)
+BASE_DIR = Path(__file__).parent
+banner_path = BASE_DIR / "assets" / "banner.png"
+st.image(str(banner_path), use_container_width=True)
 
 # ── Title ────────────────────────────────────────────────
 st.markdown("""
